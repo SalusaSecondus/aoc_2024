@@ -9,8 +9,6 @@ import (
 	"strings"
 )
 
-var aocClient = &http.Client{}
-
 func fileToLines(filename string) ([]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
