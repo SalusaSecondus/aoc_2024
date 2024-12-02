@@ -6,8 +6,17 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"slices"
 	"strings"
 )
+
+func Abs(a int) int {
+	if a < 0 {
+		return -a
+	} else {
+		return a
+	}
+}
 
 func fileToLines(filename string) ([]string, error) {
 	file, err := os.Open(filename)
@@ -70,4 +79,10 @@ func check(e error) {
 	if e != nil {
 		panic(e)
 	}
+}
+
+func RemoveElement[S ~[]E, E any](s S, i int) S {
+	result := make([]E, len(s))
+	copy(result, s)
+	return slices.Delete(result, i, i+1)
 }
