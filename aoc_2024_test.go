@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestDay1(t *testing.T) {
 	smoke_input := readInput(1, true)
@@ -27,23 +29,45 @@ func TestDay1(t *testing.T) {
 }
 
 func TestDay2(t *testing.T) {
-	smoke_input := readInput(2, true)
-	smoke_1 := day2_1(smoke_input)
-	if smoke_1 != 2 {
-		t.Fatalf("Smoke 2_1. Expected 2 but got %d", smoke_1)
-	}
-	smoke_2 := day2_2(smoke_input)
-	if smoke_2 != 4 {
-		t.Fatalf("Smoke 2_1. Expected 4 but got %d", smoke_2)
-	}
+	assertIntDay(2, 1, true, 2, day2_1, t)
+	assertIntDay(2, 2, true, 4, day2_2, t)
 
-	real := readInput(2, false)
-	real_1 := day2_1(real)
-	if real_1 != 299 {
-		t.Fatalf("Day 2_1. Expected 299 but got %d", real_1)
+	assertIntDay(2, 1, false, 299, day2_1, t)
+	assertIntDay(2, 2, false, 364, day2_2, t)
+}
+
+func TestDay3(t *testing.T) {
+	assertInt64Day(3, 1, true, 161, day3_1, t)
+	assertInt64Day(3, 2, true, 48, day3_2, t)
+
+	assertInt64Day(3, 1, false, 155955228, day3_1, t)
+	assertInt64Day(3, 2, false, 100189366, day3_2, t)
+}
+
+type dayIntFunc func([]string) int
+
+func assertIntDay(day, part int, smoke bool, expected int, fn dayIntFunc, t *testing.T) {
+	input := readInput(day, smoke)
+	result := fn(input)
+	prefix := "Real"
+	if smoke {
+		prefix = "Smoke"
 	}
-	real_2 := day2_2(real)
-	if real_2 != 364 {
-		t.Fatalf("Day 2_2. Expected 364 but got %d", real_2)
+	if result != expected {
+		t.Fatalf("%s %d_%d failed. Expected %d but got %d", prefix, day, part, expected, result)
+	}
+}
+
+type dayInt64Func func([]string) int64
+
+func assertInt64Day(day, part int, smoke bool, expected int64, fn dayInt64Func, t *testing.T) {
+	input := readInput(day, smoke)
+	result := fn(input)
+	prefix := "Real"
+	if smoke {
+		prefix = "Smoke"
+	}
+	if result != expected {
+		t.Fatalf("%s %d_%d failed. Expected %d but got %d", prefix, day, part, expected, result)
 	}
 }
