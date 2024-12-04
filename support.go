@@ -86,3 +86,31 @@ func RemoveElement[S ~[]E, E any](s S, i int) S {
 	copy(result, s)
 	return slices.Delete(result, i, i+1)
 }
+
+type Coord [2]int
+
+type Grid[V any] struct {
+	Elements               map[Coord]V
+	MinX, MaxX, MinY, MaxY int
+}
+
+func toGrid(input []string) Grid[byte] {
+	elements := map[Coord]byte{}
+	maxX := 0
+	for y := 0; y < len(input); y++ {
+		row := input[y]
+		for x := 0; x < len(row); x++ {
+			elem := row[x]
+			coord := [2]int{x, y}
+			elements[coord] = elem
+		}
+		maxX = max(len(row)-1, maxX)
+	}
+	return Grid[byte]{
+		Elements: elements,
+		MinX:     0,
+		MinY:     0,
+		MaxX:     maxX,
+		MaxY:     len(input) - 1,
+	}
+}

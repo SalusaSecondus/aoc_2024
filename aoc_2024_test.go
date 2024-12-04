@@ -44,6 +44,14 @@ func TestDay3(t *testing.T) {
 	assertInt64Day(3, 2, false, 100189366, day3_2, t)
 }
 
+func TestDay4(t *testing.T) {
+	assertIntDay(4, 1, true, 18, day4_1, t)
+	assertIntDay(4, 2, true, 9, day4_2, t)
+
+	assertIntDay(4, 1, false, 2414, day4_1, t)
+	assertIntDay(4, 2, false, 1871, day4_2, t)
+}
+
 type dayIntFunc func([]string) int
 
 func assertIntDay(day, part int, smoke bool, expected int, fn dayIntFunc, t *testing.T) {
