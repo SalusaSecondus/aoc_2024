@@ -92,25 +92,73 @@ type Coord [2]int
 type Grid[V any] struct {
 	Elements               map[Coord]V
 	MinX, MaxX, MinY, MaxY int
+	Default                V
 }
 
-func toGrid(input []string) Grid[byte] {
-	elements := map[Coord]byte{}
-	maxX := 0
+func NewGrid[V any]() Grid[V] {
+	elements := make(map[Coord]V)
+	return Grid[V]{
+		Elements: elements,
+	}
+}
+
+func (g Grid[V]) Get(x, y int) V {
+	coord := [2]int{x, y}
+	result, found := g.Elements[coord]
+	if found {
+		return result
+	} else {
+		return g.Default
+	}
+}
+
+func (g Grid[V]) Contains(x, y int) bool {
+	coord := [2]int{x, y}
+	_, found := g.Elements[coord]
+	return found
+}
+
+func (g *Grid[V]) Set(x, y int, value V) (V, bool) {
+	coord := [2]int{x, y}
+
+	old, found := g.Elements[coord]
+	g.Elements[coord] = value
+
+	if !found {
+		if len(g.Elements) == 0 {
+			g.MinX = x
+			g.MaxX = x
+			g.MinY = y
+			g.MaxY = y
+		} else {
+			g.MinX = min(g.MinX, x)
+			g.MaxX = max(g.MaxX, x)
+			g.MinY = min(g.MinY, y)
+			g.MaxY = max(g.MaxY, y)
+		}
+	}
+	return old, found
+}
+
+func toGrid(input []string) Grid[string] {
+	result := NewGrid[string]()
 	for y := 0; y < len(input); y++ {
 		row := input[y]
 		for x := 0; x < len(row); x++ {
-			elem := row[x]
-			coord := [2]int{x, y}
-			elements[coord] = elem
+			elem := fmt.Sprintf("%c", row[x])
+			result.Set(x, y, elem)
 		}
-		maxX = max(len(row)-1, maxX)
 	}
-	return Grid[byte]{
-		Elements: elements,
-		MinX:     0,
-		MinY:     0,
-		MaxX:     maxX,
-		MaxY:     len(input) - 1,
+	return result
+}
+
+func (g Grid[V]) String() string {
+	result := ""
+	for y := g.MinY; y <= g.MaxY; y++ {
+		for x := g.MinX; x <= g.MaxX; x++ {
+			result = fmt.Sprintf("%s%v", result, g.Get(x, y))
+		}
+		result = result + "\n"
 	}
+	return result
 }

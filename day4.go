@@ -1,9 +1,12 @@
 package main
 
+import "fmt"
+
 func day4_1(input []string) int {
 	grid := toGrid(input)
+	fmt.Println(grid)
 	result := 0
-	target := []byte{'X', 'M', 'A', 'S'}
+	target := []string{"X", "M", "A", "S"}
 
 	for x := grid.MinX; x <= grid.MaxX; x++ {
 		for y := grid.MinY; y <= grid.MaxY; y++ {
@@ -41,15 +44,15 @@ func day4_2(input []string) int {
 			sw := [2]int{x - 1, y + 1}
 			se := [2]int{x + 1, y + 1}
 
-			if grid.Elements[center] != 'A' {
+			if grid.Elements[center] != "A" {
 				continue
 			}
-			// fmt.Printf("Found 'A' at %v\n", center)
-			foundOne := (grid.Elements[nw] == 'M' && grid.Elements[se] == 'S') ||
-				(grid.Elements[nw] == 'S' && grid.Elements[se] == 'M')
+			// fmt.Printf("Found "A" at %v\n", center)
+			foundOne := (grid.Elements[nw] == "M" && grid.Elements[se] == "S") ||
+				(grid.Elements[nw] == "S" && grid.Elements[se] == "M")
 
-			foundTwo := (grid.Elements[ne] == 'M' && grid.Elements[sw] == 'S') ||
-				(grid.Elements[ne] == 'S' && grid.Elements[sw] == 'M')
+			foundTwo := (grid.Elements[ne] == "M" && grid.Elements[sw] == "S") ||
+				(grid.Elements[ne] == "S" && grid.Elements[sw] == "M")
 
 			if foundOne && foundTwo {
 				result++
