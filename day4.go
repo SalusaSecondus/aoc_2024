@@ -1,10 +1,7 @@
 package main
 
-import "fmt"
-
 func day4_1(input []string) int {
 	grid := toGrid(input)
-	fmt.Println(grid)
 	result := 0
 	target := []string{"X", "M", "A", "S"}
 

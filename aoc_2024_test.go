@@ -52,6 +52,14 @@ func TestDay4(t *testing.T) {
 	assertIntDay(4, 2, false, 1871, day4_2, t)
 }
 
+func TestDay5(t *testing.T) {
+	assertIntDay(5, 1, true, 143, day5_1, t)
+	assertIntDay(5, 2, true, 123, day5_2, t)
+
+	assertIntDay(5, 1, false, 5964, day5_1, t)
+	assertIntDay(5, 2, false, 4719, day5_2, t)
+}
+
 type dayIntFunc func([]string) int
 
 func assertIntDay(day, part int, smoke bool, expected int, fn dayIntFunc, t *testing.T) {
