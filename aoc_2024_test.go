@@ -68,6 +68,29 @@ func TestDay6(t *testing.T) {
 	assertIntDay(6, 2, false, 1723, day6_2, t)
 }
 
+func BenchmarkDay62(b *testing.B) {
+	input := readInput(6, false)
+	for i := 0; i < b.N; i++ {
+		day6_2(input)
+	}
+}
+
+func TestDay7(t *testing.T) {
+	day := 7
+	assertIntDay(day, 1, true, 3749, day7_1, t)
+	assertIntDay(day, 1, false, 5702958180383, day7_1, t)
+
+	assertIntDay(day, 2, true, 11387, day7_2, t)
+	assertIntDay(day, 2, false, 92612386119138, day7_2, t)
+}
+
+func BenchmarkDay7(b *testing.B) {
+	lines := readInput(7, false)
+	for i := 0; i < b.N; i++ {
+		day7_2(lines)
+	}
+}
+
 type dayIntFunc func([]string) int
 
 func assertIntDay(day, part int, smoke bool, expected int, fn dayIntFunc, t *testing.T) {

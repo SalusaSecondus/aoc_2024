@@ -41,15 +41,17 @@ func day6_1(input []string) int {
 			result++
 		}
 	}
-	fmt.Println(grid)
-	fmt.Println(len(grid.Elements))
+	// fmt.Println(grid)
+	// fmt.Println(len(grid.Elements))
 
 	return result
 }
 
 func day6_2(input []string) int {
 	var result int
-	baseGrid, baseGuard := parse6(input)
+	templateGrid, templateGuard := parse6(input)
+	baseGrid := templateGrid.Clone()
+	baseGuard := templateGuard
 	for !baseGuard.step(baseGrid) {
 	}
 
@@ -57,7 +59,9 @@ func day6_2(input []string) int {
 		if elem != Visited6 {
 			continue
 		}
-		grid, guard := parse6(input)
+		grid := templateGrid.Clone()
+		guard := templateGuard
+		// guard := baseGuard
 		grid.Elements[coord] = Block6
 		// fmt.Printf("Trying\n%s\n", grid)
 

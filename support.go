@@ -162,3 +162,12 @@ func (g Grid[V]) String() string {
 	}
 	return result
 }
+
+func (g Grid[V]) Clone() Grid[V] {
+	result := g
+	result.Elements = make(map[Coord]V)
+	for k, v := range g.Elements {
+		result.Elements[k] = v
+	}
+	return result
+}
