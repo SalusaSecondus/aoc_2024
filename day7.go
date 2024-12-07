@@ -44,7 +44,7 @@ type Equation7 struct {
 
 func (e Equation7) Solve(legalOps []Operator7) []Operator7 {
 	ops := make([]Operator7, len(e.Operands)-1)
-	if e.solveInner(legalOps, 0, ops) {
+	if e.solveInner(legalOps, 0, ops, e.Operands[0]) {
 		return ops
 	} else {
 		return nil
@@ -59,29 +59,26 @@ func (e Equation7) Formatted(ops []Operator7) string {
 	return result
 }
 
-func (e Equation7) solveInner(legalOps []Operator7, offset int, ops []Operator7) bool {
+func (e Equation7) solveInner(legalOps []Operator7, offset int, ops []Operator7, tally int) bool {
 	if offset == len(ops) {
-		tally := e.Operands[0]
-		for idx, op := range ops {
-			next := e.Operands[idx+1]
-			switch op {
-			case Mult7:
-				tally *= next
-			case Add7:
-				tally += next
-			case Concat7:
-				digits := len(strconv.Itoa(next))
-				tally *= int(math.Pow10(digits))
-				tally += next
-				// tally, _ = strconv.Atoi(fmt.Sprintf("%d%d", tally, next))
-			}
-		}
 		return tally == e.Solution
 	}
 	for _, nextOp := range legalOps {
-		// fmt.Println(nextOp)
 		ops[offset] = Operator7(nextOp)
-		if e.solveInner(legalOps, offset+1, ops) {
+
+		nextTally := tally
+		next := e.Operands[offset+1]
+		switch nextOp {
+		case Mult7:
+			nextTally *= next
+		case Add7:
+			nextTally += next
+		case Concat7:
+			digits := len(strconv.Itoa(next))
+			nextTally *= int(math.Pow10(digits))
+			nextTally += next
+		}
+		if nextTally <= e.Solution && e.solveInner(legalOps, offset+1, ops, nextTally) {
 			return true
 		}
 	}
