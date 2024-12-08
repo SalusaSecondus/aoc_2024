@@ -89,13 +89,13 @@ func RemoveElement[S ~[]E, E any](s S, i int) S {
 
 type Coord [2]int
 
-type Grid[V any] struct {
+type Grid[V comparable] struct {
 	Elements               map[Coord]V
 	MinX, MaxX, MinY, MaxY int
 	Default                V
 }
 
-func NewGrid[V any]() Grid[V] {
+func NewGrid[V comparable]() Grid[V] {
 	elements := make(map[Coord]V)
 	return Grid[V]{
 		Elements: elements,
@@ -122,9 +122,13 @@ func (g *Grid[V]) Set(x, y int, value V) (V, bool) {
 	coord := [2]int{x, y}
 
 	old, found := g.Elements[coord]
-	g.Elements[coord] = value
+	if value != g.Default {
+		g.Elements[coord] = value
+	} else {
+		delete(g.Elements, coord)
+	}
 
-	if !found {
+	if !found && value != g.Default {
 		if len(g.Elements) == 0 {
 			g.MinX = x
 			g.MaxX = x
@@ -138,6 +142,15 @@ func (g *Grid[V]) Set(x, y int, value V) (V, bool) {
 		}
 	}
 	return old, found
+}
+
+func (g Grid[V]) Compress() Grid[V] {
+	result := NewGrid[V]()
+	result.Default = g.Default
+	for k, v := range g.Elements {
+		result.Set(k[0], k[1], v)
+	}
+	return result
 }
 
 func toGrid(input []string) Grid[string] {
