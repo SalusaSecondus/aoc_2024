@@ -89,6 +89,10 @@ func RemoveElement[S ~[]E, E any](s S, i int) S {
 
 type Coord [2]int
 
+func (c Coord) String() string {
+	return fmt.Sprintf("(%d, %d)", c[0], c[1])
+}
+
 type Grid[V comparable] struct {
 	Elements               map[Coord]V
 	MinX, MaxX, MinY, MaxY int

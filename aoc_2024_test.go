@@ -109,10 +109,40 @@ func TestDay9(t *testing.T) {
 	assertIntDay(day, 2, false, 6493634986625, day9_2, t)
 }
 
+func BenchmarkDay9_1(t *testing.B) {
+	lines := readInput(9, false)
+	for i := 0; i < t.N; i++ {
+		day9_1(lines)
+	}
+}
+
 func BenchmarkDay9_2(t *testing.B) {
 	lines := readInput(9, false)
 	for i := 0; i < t.N; i++ {
 		day9_2(lines)
+	}
+}
+
+func TestDay10(t *testing.T) {
+	day := 10
+	assertIntDay(day, 1, true, 36, day10_1, t)
+	assertIntDay(day, 1, false, 472, day10_1, t)
+
+	assertIntDay(day, 2, true, 81, day10_2, t)
+	assertIntDay(day, 2, false, 969, day10_2, t)
+}
+
+func BenchmarkDay10_1(t *testing.B) {
+	lines := readInput(10, false)
+	for i := 0; i < t.N; i++ {
+		day10_1(lines)
+	}
+}
+
+func BenchmarkDay10_2(t *testing.B) {
+	lines := readInput(10, false)
+	for i := 0; i < t.N; i++ {
+		day10_2(lines)
 	}
 }
 
