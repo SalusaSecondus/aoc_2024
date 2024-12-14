@@ -179,7 +179,23 @@ func TestDay13(t *testing.T) {
 	assertIntDay(day, 1, false, 29711, day13_1_beta, t)
 	t.Logf("Part2\n")
 	assertIntDay(day, 2, true, 875318608908, day13_2, t)
-	assertIntDay(day, 2, false, 0, day13_2, t)
+	assertIntDay(day, 2, false, 94955433618919, day13_2, t)
+}
+
+func BenchmarkDay13(t *testing.B) {
+	lines := readInput(13, false)
+	for i := 0; i < t.N; i++ {
+		day13_2(lines)
+	}
+}
+
+func TestDay14(t *testing.T) {
+	day := 14
+	assertIntDay(day, 1, true, 12, day14_1, t)
+	assertIntDay(day, 1, false, 211692000, day14_1, t)
+
+	// assertIntDay(day, 2, true, 0, day14_2, t)
+	// assertIntDay(day, 2, false, 0, day14_2, t)
 }
 
 type dayIntFunc func([]string) int

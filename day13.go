@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"strconv"
 )
@@ -10,10 +9,10 @@ import (
 func day13_1(lines []string) int {
 	result := 0
 	machines := parse13(lines)
-	fmt.Printf("Machines: %+v\n", machines)
-	for idx, m := range machines {
-		a, b, cost := m.BestPath()
-		fmt.Printf("Found path for machine %d. %d A and %d B for a cost of %d\n", idx, a, b, cost)
+	// fmt.Printf("Machines: %+v\n", machines)
+	for _, m := range machines {
+		a, _, cost := m.BestPath()
+		// fmt.Printf("Found path for machine %d. %d A and %d B for a cost of %d\n", idx, a, b, cost)
 		if a > 0 {
 			result += cost
 		}
@@ -24,11 +23,11 @@ func day13_1(lines []string) int {
 func day13_1_beta(lines []string) int {
 	result := 0
 	machines := parse13(lines)
-	fmt.Printf("Machines: %+v\n", machines)
-	for idx, m := range machines {
+	// fmt.Printf("Machines: %+v\n", machines)
+	for _, m := range machines {
 		b, err := m.solveB()
 		if err != nil {
-			fmt.Printf("No solution for machine %d\n", idx+1)
+			// fmt.Printf("No solution for machine %d\n", idx+1)
 		} else {
 			remX := m.destX - b*m.bX
 			remY := m.destY - b*m.bY
@@ -40,7 +39,7 @@ func day13_1_beta(lines []string) int {
 			}
 			cost := 3*a + b
 			result += cost
-			fmt.Printf("Found path for machine %d. %d A and %d B for a cost of %d\n", idx+1, a, b, cost)
+			// fmt.Printf("Found path for machine %d. %d A and %d B for a cost of %d\n", idx+1, a, b, cost)
 		}
 	}
 	return result
@@ -49,18 +48,18 @@ func day13_1_beta(lines []string) int {
 func day13_2(lines []string) int {
 	result := 0
 	machines := parse13(lines)
-	for idx, m := range machines {
+	for _, m := range machines {
 		m.destX += 10000000000000
 		m.destY += 10000000000000
 		b, err := m.solveB()
 		if err != nil {
-			fmt.Printf("No solution for machine %d\n", idx)
+			// fmt.Printf("No solution for machine %d\n", idx)
 		} else {
 			a := (m.destX - b*m.bX) / m.aX
 
 			cost := 3*a + b
 			result += cost
-			fmt.Printf("Found path for machine %d. %d A and %d B for a cost of %d\n", idx+1, a, b, cost)
+			// fmt.Printf("Found path for machine %d. %d A and %d B for a cost of %d\n", idx+1, a, b, cost)
 		}
 	}
 	return result
