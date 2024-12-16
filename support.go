@@ -108,7 +108,11 @@ func NewGrid[V comparable]() Grid[V] {
 
 func (g Grid[V]) Get(x, y int) V {
 	coord := [2]int{x, y}
-	result, found := g.Elements[coord]
+	return g.GetC(coord)
+}
+
+func (g Grid[V]) GetC(c Coord) V {
+	result, found := g.Elements[c]
 	if found {
 		return result
 	} else {
@@ -124,7 +128,10 @@ func (g Grid[V]) Contains(x, y int) bool {
 
 func (g *Grid[V]) Set(x, y int, value V) (V, bool) {
 	coord := [2]int{x, y}
+	return g.SetC(coord, value)
+}
 
+func (g *Grid[V]) SetC(coord Coord, value V) (V, bool) {
 	old, found := g.Elements[coord]
 	if value != g.Default {
 		g.Elements[coord] = value
@@ -134,15 +141,15 @@ func (g *Grid[V]) Set(x, y int, value V) (V, bool) {
 
 	if !found && value != g.Default {
 		if len(g.Elements) == 0 {
-			g.MinX = x
-			g.MaxX = x
-			g.MinY = y
-			g.MaxY = y
+			g.MinX = coord[0]
+			g.MaxX = coord[0]
+			g.MinY = coord[1]
+			g.MaxY = coord[1]
 		} else {
-			g.MinX = min(g.MinX, x)
-			g.MaxX = max(g.MaxX, x)
-			g.MinY = min(g.MinY, y)
-			g.MaxY = max(g.MaxY, y)
+			g.MinX = min(g.MinX, coord[0])
+			g.MaxX = max(g.MaxX, coord[0])
+			g.MinY = min(g.MinY, coord[1])
+			g.MaxY = max(g.MaxY, coord[1])
 		}
 	}
 	return old, found
