@@ -213,7 +213,21 @@ func TestDay16(t *testing.T) {
 	assertIntDay(day, 1, false, 73432, day16_1, t)
 
 	assertIntDay(day, 2, true, 45, day16_2, t)
-	assertIntDay(day, 2, false, 0, day16_2, t)
+	assertIntDay(day, 2, false, 496, day16_2, t)
+}
+
+func Benchmark16_1(t *testing.B) {
+	lines := readInput(16, false)
+	for i := 0; i < t.N; i++ {
+		day16_1(lines)
+	}
+}
+
+func Benchmark16_2(t *testing.B) {
+	lines := readInput(16, false)
+	for i := 0; i < t.N; i++ {
+		day16_2(lines)
+	}
 }
 
 type dayIntFunc func([]string) int
