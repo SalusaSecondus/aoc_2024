@@ -207,6 +207,15 @@ func TestDay15(t *testing.T) {
 	assertIntDay(day, 2, false, 1481392, day15_2, t)
 }
 
+func TestDay16(t *testing.T) {
+	day := 16
+	assertIntDay(day, 1, true, 7036, day16_1, t)
+	assertIntDay(day, 1, false, 73432, day16_1, t)
+
+	assertIntDay(day, 2, true, 45, day16_2, t)
+	assertIntDay(day, 2, false, 0, day16_2, t)
+}
+
 type dayIntFunc func([]string) int
 
 func assertIntDay(day, part int, smoke bool, expected int, fn dayIntFunc, t *testing.T) {
