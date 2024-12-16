@@ -3,8 +3,8 @@ package main
 import "container/heap"
 
 func day16_1(lines []string) int {
-	result := 0
-	return result
+	grid, reindeer, end := parse16(lines)
+	return dijk16(grid, reindeer, end)
 }
 
 func day16_2(lines []string) int {
