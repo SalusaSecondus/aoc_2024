@@ -216,17 +216,40 @@ func TestDay16(t *testing.T) {
 	assertIntDay(day, 2, false, 496, day16_2, t)
 }
 
-func Benchmark16_1(t *testing.B) {
+func BenchmarkDay16_1(t *testing.B) {
 	lines := readInput(16, false)
 	for i := 0; i < t.N; i++ {
 		day16_1(lines)
 	}
 }
 
-func Benchmark16_2(t *testing.B) {
+func BenchmarkDay16_2(t *testing.B) {
 	lines := readInput(16, false)
 	for i := 0; i < t.N; i++ {
 		day16_2(lines)
+	}
+}
+
+func TestDay17(t *testing.T) {
+	day := 17
+	// assertStringDay(day, 1, true, "4,6,3,5,6,3,5,2,1,0", day17_1, t)
+	assertStringDay(day, 1, false, "7,3,0,5,7,1,4,0,5", day17_1, t)
+
+	assertIntDay(day, 2, true, 117440, day17_2, t)
+	assertIntDay(day, 2, false, 202972175280682, day17_2, t)
+}
+
+func BenchmarkDay17_1(t *testing.B) {
+	lines := readInput(17, false)
+	for i := 0; i < t.N; i++ {
+		day17_1(lines)
+	}
+}
+
+func BenchmarkDay17_2(t *testing.B) {
+	lines := readInput(17, false)
+	for i := 0; i < t.N; i++ {
+		day17_2(lines)
 	}
 }
 
@@ -255,5 +278,19 @@ func assertInt64Day(day, part int, smoke bool, expected int64, fn dayInt64Func, 
 	}
 	if result != expected {
 		t.Fatalf("%s %d_%d failed. Expected %d but got %d", prefix, day, part, expected, result)
+	}
+}
+
+type dayStringFunc func([]string) string
+
+func assertStringDay(day, part int, smoke bool, expected string, fn dayStringFunc, t *testing.T) {
+	input := readInput(day, smoke)
+	result := fn(input)
+	prefix := "Real"
+	if smoke {
+		prefix = "Smoke"
+	}
+	if result != expected {
+		t.Fatalf("%s %d_%d failed. Expected \"%s\" but got \"%s\"", prefix, day, part, expected, result)
 	}
 }
