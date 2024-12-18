@@ -195,3 +195,7 @@ func (g Grid[V]) Clone() Grid[V] {
 	}
 	return result
 }
+
+func (g Grid[V]) InRangeC(coord Coord) bool {
+	return coord[0] >= g.MinX && coord[0] <= g.MaxX && coord[1] >= g.MinY && coord[1] <= g.MaxY
+}
