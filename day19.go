@@ -6,9 +6,9 @@ func day19_1(lines []string) int {
 	towels, patterns := parse19(lines)
 
 	result := 0
-	cache := make(map[string]bool)
+	cache := make(map[string]int)
 	for _, p := range patterns {
-		if isPossible19(towels, p, &cache) {
+		if isPossible19(towels, p, &cache) > 0 {
 			result++
 		}
 	}
@@ -16,30 +16,35 @@ func day19_1(lines []string) int {
 }
 
 func day19_2(lines []string) int {
+	towels, patterns := parse19(lines)
+
 	result := 0
+	cache := make(map[string]int)
+	for _, p := range patterns {
+		result += isPossible19(towels, p, &cache)
+	}
 	return result
 }
 
-func isPossible19(towels []string, pattern string, cache *map[string]bool) bool {
+func isPossible19(towels []string, pattern string, cache *map[string]int) int {
 	if len(pattern) == 0 {
-		return true
+		return 1
 	}
 	cAns, found := (*cache)[pattern]
 	if found {
 		return cAns
 	}
 
+	result := 0
 	for _, t := range towels {
 		if strings.HasPrefix(pattern, t) {
 			suffix := pattern[len(t):]
-			if isPossible19(towels, suffix, cache) {
-				(*cache)[pattern] = true
-				return true
-			}
+			result += isPossible19(towels, suffix, cache)
+
 		}
 	}
-	(*cache)[pattern] = false
-	return false
+	(*cache)[pattern] = result
+	return result
 }
 
 func parse19(lines []string) ([]string, []string) {

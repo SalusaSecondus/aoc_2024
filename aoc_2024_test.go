@@ -282,7 +282,14 @@ func TestDay19(t *testing.T) {
 	assertIntDay(day, 1, false, 206, day19_1, t)
 
 	assertIntDay(day, 2, true, 16, day19_2, t)
-	assertIntDay(day, 2, false, 0, day19_2, t)
+	assertIntDay(day, 2, false, 622121814629343, day19_2, t)
+}
+
+func BenchmarkDay19_2(t *testing.B) {
+	lines := readInput(19, false)
+	for i := 0; i < t.N; i++ {
+		day19_2(lines)
+	}
 }
 
 type dayIntFunc func([]string) int
