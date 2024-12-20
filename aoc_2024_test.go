@@ -292,6 +292,15 @@ func BenchmarkDay19_2(t *testing.B) {
 	}
 }
 
+func TestDay20(t *testing.T) {
+	day := 20
+	// assertIntDay(day, 1, true, 4, day20_1, t)
+	// assertIntDay(day, 1, false, 1502, day20_1, t)
+
+	assertIntDay(day, 2, true, 41, day20_2, t)
+	// assertIntDay(day, 2, false, 0, day20_2, t)
+}
+
 type dayIntFunc func([]string) int
 
 func assertIntDay(day, part int, smoke bool, expected int, fn dayIntFunc, t *testing.T) {
@@ -304,6 +313,24 @@ func assertIntDay(day, part int, smoke bool, expected int, fn dayIntFunc, t *tes
 	if result != expected {
 		t.Fatalf("%s %d_%d failed. Expected %d but got %d", prefix, day, part, expected, result)
 	}
+}
+
+func TestDay21(t *testing.T) {
+	day := 21
+	assertIntDay(day, 1, true, 126384, day21_1, t)
+	assertIntDay(day, 1, false, 123096, day21_1, t)
+
+	// assertIntDay(day, 2, true, 0, day21_2, t)
+	assertIntDay(day, 2, false, 1, day21_2, t)
+}
+
+func TestDay22(t *testing.T) {
+	day := 22
+	// assertIntDay(day, 1, true, 37327623, day22_1, t)
+	assertIntDay(day, 1, false, 16299144133, day22_1, t)
+
+	assertIntDay(day, 2, true, 23, day22_2, t)
+	assertIntDay(day, 2, false, 1896, day22_2, t)
 }
 
 type dayInt64Func func([]string) int64
