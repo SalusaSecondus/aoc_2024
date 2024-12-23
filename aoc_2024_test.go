@@ -333,6 +333,22 @@ func TestDay22(t *testing.T) {
 	assertIntDay(day, 2, false, 1896, day22_2, t)
 }
 
+func TestDay23(t *testing.T) {
+	day := 23
+	assertIntDay(day, 1, true, 7, day23_1, t)
+	assertIntDay(day, 1, false, 1323, day23_1, t)
+
+	assertStringDay(day, 2, true, "co,de,ka,ta", day23_2, t)
+	assertStringDay(day, 2, false, "er,fh,fi,ir,kk,lo,lp,qi,ti,vb,xf,ys,yu", day23_2, t)
+}
+
+func BenchmarkDay23_2(t *testing.B) {
+	lines := readInput(23, false)
+	for i := 0; i < t.N; i++ {
+		day23_2(lines)
+	}
+}
+
 type dayInt64Func func([]string) int64
 
 func assertInt64Day(day, part int, smoke bool, expected int64, fn dayInt64Func, t *testing.T) {
